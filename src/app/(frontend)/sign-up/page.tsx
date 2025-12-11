@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { redirect } from 'next/navigation'
+import { Suspense } from 'react'
 
 import {
   Card,
@@ -17,12 +17,8 @@ export const metadata = {
 }
 
 export default async function SignInPage() {
-  // if (session?.user?.id) {
-  //   redirect('/dashboard')
-  // }
-
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-background to-muted/30 p-4">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-linear-to-b from-background to-muted/30 p-4">
       <div className="w-full max-w-md space-y-8">
         {/* Logo and App Name */}
         <div className="flex flex-col items-center space-y-2">
@@ -56,7 +52,9 @@ export default async function SignInPage() {
             <CardDescription>Enter your information to get started</CardDescription>
           </CardHeader>
           <CardContent>
-            <SignUpForm />
+            <Suspense fallback={<div>Loading...</div>}>
+              <SignUpForm />
+            </Suspense>
             {/* <Button variant="outline" size="icon" className="h-10">
                 <Mail className="h-4 w-4" />
                 <span className="sr-only">Email</span>

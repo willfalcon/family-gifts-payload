@@ -154,17 +154,13 @@ export const Message: CollectionConfig = {
         where: {
           or: [
             {
-              giver: {
-                user: {
-                  equals: user.id,
-                },
+              'giver.user': {
+                equals: user.id,
               },
             },
             {
-              receiver: {
-                user: {
-                  equals: user.id,
-                },
+              'receiver.user': {
+                equals: user.id,
               },
             },
           ],

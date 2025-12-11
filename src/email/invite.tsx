@@ -1,5 +1,6 @@
-import { Family } from '@/types/family'
+import { Family as PayloadFamily } from '@/payload-types'
 import { Invite } from '@/types/invite'
+import { Family } from '@/types/family'
 import {
   Body,
   Button,
@@ -14,7 +15,7 @@ import {
   Text,
 } from '@react-email/components'
 
-export default function InviteEmailTemplate(member: Invite, family: Family) {
+export default function InviteEmailTemplate(member: Invite, family: Family | PayloadFamily) {
   const previewText = `Someone invited you to join the family on Family Gifts.`
   const inviteLink = `${process.env.NEXT_PUBLIC_FRONTEND_URL}/join?token=${member.token}`
   return (

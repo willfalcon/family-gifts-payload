@@ -33,14 +33,16 @@ export async function joinFamily(familyId: string) {
 
   if (
     family.requireApproval &&
-    family.invites?.some((invite) => typeof invite !== 'string' && invite.email! === user?.email)
+    family.invites?.docs?.some(
+      (invite) => typeof invite !== 'string' && invite.email! === user?.email,
+    )
   ) {
     throw new Error(
       'You are already waiting to join this family. A family manager will need to approve your request.',
     )
   }
 
-  const invite = await payload.create({
+  await payload.create({
     collection: 'invite',
     data: {
       email: user?.email,
@@ -59,12 +61,6 @@ export async function joinFamily(familyId: string) {
           []),
         user?.id,
       ]
-
-  const invites = [
-    ...(family.invites?.map((invite) => (typeof invite === 'string' ? invite : invite.id)) || []),
-    invite.id,
-  ]
-
   //   const UPDATE_FAMILY_MUTATION = gql`
   //   mutation updateFamily($id: String!, $members: [String!], $invites: [String!]) {
   //     updateFamily(id: $id, data: { members: $members, invites: $invites }) {
@@ -78,7 +74,6 @@ export async function joinFamily(familyId: string) {
     id: familyId,
     data: {
       members,
-      invites,
     },
   })
 }

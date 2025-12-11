@@ -1,13 +1,14 @@
 'use server'
 
 import { Resend } from 'resend'
-import { Family } from '@/types/family'
+import { Family as PayloadFamily } from '@/payload-types'
 import { Invite } from '@/types/invite'
+import { Family } from '@/types/family'
 import InviteEmailTemplate from '@/email/invite'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
-export async function sendInviteEmail(invite: Invite, family: Family) {
+export async function sendInviteEmail(invite: Invite, family: Family | PayloadFamily) {
   try {
     const { data, error } = await resend.emails.send({
       from: `Invite <${process.env.FROM_EMAIL_ADDRESS}>`,

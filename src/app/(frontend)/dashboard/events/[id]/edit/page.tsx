@@ -1,7 +1,5 @@
-import { redirect } from 'next/navigation'
-
 import Title, { SubTitle } from '@/components/Title'
-import { getEvent } from '../page'
+import { getEvent } from '@/lib/server-utils'
 import { getUser } from '@/lib/server-utils'
 import UpdateEvent from './UpdateEvent'
 import SetBreadcrumbs from '@/components/SetBreadcrumbs'

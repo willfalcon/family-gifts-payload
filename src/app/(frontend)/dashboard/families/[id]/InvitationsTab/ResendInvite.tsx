@@ -1,14 +1,21 @@
 'use client'
 
-import { Family, Invite } from '@/hooks/use-family'
+import { Invite } from '@/types/invite'
 import { Mail } from 'lucide-react'
 import { useState } from 'react'
 import { toast } from 'sonner'
 
 import { Button } from '@/components/ui/button'
 import { sendInviteEmail } from '../../../actions'
+import { Family as PayloadFamily } from '@/payload-types'
 
-export default function ResendInvite({ invite, family }: { invite: Invite; family: Family }) {
+export default function ResendInvite({
+  invite,
+  family,
+}: {
+  invite: Invite
+  family: PayloadFamily
+}) {
   const [sending, setSending] = useState(false)
   async function resendInvite() {
     setSending(true)

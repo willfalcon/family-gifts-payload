@@ -4,11 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
-
-import { getDefaults } from '@/schemas/utils'
-// import { User } from '@prisma/client'
 import { ListSchema, type ListSchemaType } from '@/schemas/list'
-// import { createList } from './actions'
 
 import SetBreadcrumbs from '@/components/SetBreadcrumbs'
 import ListForm from '../components/ListForm'

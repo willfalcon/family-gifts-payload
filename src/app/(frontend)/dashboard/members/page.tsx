@@ -1,28 +1,13 @@
 import SetBreadcrumbs from '@/components/SetBreadcrumbs'
 import Title, { SubTitle } from '@/components/Title'
 import { buttonVariants } from '@/components/ui/button'
-import { getPayload, getUser } from '@/lib/server-utils'
+import { getMembers } from '@/lib/server-utils'
 import { Users2 } from 'lucide-react'
 import Link from 'next/link'
-import { redirect } from 'next/navigation'
 import MembersList from './MembersList'
 
 export const metadata = {
   title: 'Members',
-}
-
-export async function getMembers() {
-  const user = await getUser()
-  if (!user) {
-    redirect('/sign-in?redirectTo=/dashboard/members')
-  }
-  const payload = await getPayload()
-  const members = await payload.find({
-    collection: 'users',
-    overrideAccess: false,
-    user,
-  })
-  return members.docs
 }
 
 export default async function MembersPage() {

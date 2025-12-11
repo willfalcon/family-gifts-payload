@@ -6,46 +6,11 @@ import SetBreadcrumbs from '@/components/SetBreadcrumbs'
 import Title, { SubTitle } from '@/components/Title'
 import { buttonVariants } from '@/components/ui/button'
 import EventsList from './components/EventsList'
-import { getPayload, getUser } from '@/lib/server-utils'
+import { getEvents } from '@/lib/server-utils'
 
 export const metadata = {
   title: 'Events',
   description: 'Manage your gift-giving events',
-}
-
-export async function getEvents({ redirectTo }: { redirectTo?: string | undefined } = {}) {
-  const user = await getUser()
-  if (!user) {
-    redirect(`/sign-in?redirectTo=${redirectTo || '/dashboard/events'}`)
-  }
-  const payload = await getPayload()
-
-  // Get today's date at start of day (00:00:00)
-  const today = new Date()
-  today.setHours(0, 0, 0, 0)
-  const todayISO = today.toISOString()
-
-  const events = await payload.find({
-    collection: 'event',
-    where: {
-      or: [
-        {
-          date: {
-            greater_than_equal: todayISO,
-          },
-        },
-        {
-          endDate: {
-            greater_than_equal: todayISO,
-          },
-        },
-      ],
-    },
-    overrideAccess: false,
-    user,
-  })
-
-  return events.docs
 }
 
 export default async function EventsPage() {

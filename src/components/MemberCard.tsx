@@ -18,16 +18,18 @@ import { Invite } from '@/types/invite'
 import { useAuth } from '@/hooks/use-auth'
 import { User } from '@/types/user'
 import MessageDialog from './MessageDialog'
+import { useUserLists } from '@/hooks/use-user-lists'
 // import MessageDialog from './Messages/MessageDialog';
 
 type Props = {
-  member: User & { lists: { totalDocs: number } }
+  member: User
   isManager: boolean
 }
 export default function MemberCard({ member, isManager }: Props) {
   const { user } = useAuth()
-
+  const { data: lists } = useUserLists(member.id)
   const isSelf = user?.id === member.id
+
   return (
     <Card key={member.id}>
       <CardHeader className="flex flex-row items-start space-y-0 pb-2">
@@ -59,9 +61,7 @@ export default function MemberCard({ member, isManager }: Props) {
           <Badge variant={isManager ? 'default' : 'secondary'} className="text-xs">
             {isManager ? 'Manager' : 'Member'}
           </Badge>
-          <span className="text-muted-foreground text-xs">
-            {member.lists?.totalDocs || 0} wish lists
-          </span>
+          <span className="text-muted-foreground text-xs">{lists?.totalDocs || 0} wish lists</span>
         </div>
       </CardContent>
       <CardFooter className="grid grid-cols-2 p-2">

@@ -5,7 +5,7 @@ import Link from 'next/link'
 import EventCard from '@/components/EventCard'
 import { Button, buttonVariants } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
-import { getEvents } from '../events/page'
+import { getEvents } from '@/lib/server-utils'
 
 export default async function EventsSection() {
   const events = await getEvents({ redirectTo: '/dashboard/events' })

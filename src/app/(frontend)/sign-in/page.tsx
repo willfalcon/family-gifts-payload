@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { Suspense } from 'react'
 
 import {
   Card,
@@ -51,7 +52,9 @@ export default async function SignInPage() {
             <CardDescription>Sign in to your account to continue</CardDescription>
           </CardHeader>
           <CardContent>
-            <SignInForm />
+            <Suspense fallback={<div>Loading...</div>}>
+              <SignInForm />
+            </Suspense>
           </CardContent>
           <CardFooter className="flex flex-col space-y-4 border-t pt-6">
             <div className="text-center text-sm">

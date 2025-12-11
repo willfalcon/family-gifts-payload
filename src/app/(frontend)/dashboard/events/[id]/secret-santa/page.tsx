@@ -1,6 +1,6 @@
 import SetBreadcrumbs from '@/components/SetBreadcrumbs'
 import { Gift } from 'lucide-react'
-import { getEvent } from '../page'
+import { getEvent } from '@/lib/server-utils'
 import Title, { SubTitle } from '@/components/Title'
 import SecretSanta from './SecretSanta'
 import Link from 'next/link'

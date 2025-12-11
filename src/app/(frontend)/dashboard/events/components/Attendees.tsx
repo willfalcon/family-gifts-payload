@@ -9,18 +9,15 @@ import { Alert } from '@/components/ui/alert'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Checkbox } from '@/components/ui/checkbox'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Skeleton } from '@/components/ui/skeleton'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { useFamilies } from '@/hooks/use-families'
-import { Media } from '@/payload-types'
-import MemberSelect from '../[id]/edit/MemberSelect'
-import MemberSearch from '../[id]/edit/MemberSearch'
-import PrimaryFamily from '../[id]/edit/PrimaryFamily'
+import MemberSelect from './MemberSelect'
+import MemberSearch from './MemberSearch'
+import PrimaryFamily from './PrimaryFamily'
 import { Separator } from '@/components/ui/separator'
-import MorePeople from '../[id]/edit/MorePeople'
+import MorePeople from './MorePeople'
 
 export default function Attendees() {
   const form = useFormContext()
@@ -66,7 +63,7 @@ export default function Attendees() {
           <>
             <PrimaryFamily />
             <MemberSelect />
-            <MorePeople attendees={[]} />
+            <MorePeople />
             <MemberSearch />
           </>
         ) : (

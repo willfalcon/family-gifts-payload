@@ -1,13 +1,7 @@
-import { notFound, redirect } from 'next/navigation'
-
-// import FloatingMessages from '@/components/Messages/FloatingMessages'
-// import MessagesSidebar from '@/components/Messages/MessagesSidebar'
 import SetBreadcrumbs from '@/components/SetBreadcrumbs'
 import { SidebarProvider } from '@/components/ui/sidebar'
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { cache } from 'react'
-import { User } from '@/payload-types'
-import { getPayload, getUser } from '@/lib/server-utils'
+import { getEvent, getUser } from '@/lib/server-utils'
 import EventHeader from './components/EventHeader'
 import DetailsTab from './components/DetailsTab'
 import ParticipantsTab from './components/ParticipantsTab'
@@ -26,29 +20,6 @@ type PageProps = {
     id: string
   }>
 }
-
-export const getEvent = cache(async (id: string) => {
-  const user = await getUser()
-
-  if (!user) {
-    redirect(`/sign-in?redirectTo=/dashboard/events/${id}`)
-  }
-  const payload = await getPayload()
-  try {
-    const event = await payload.findByID({
-      collection: 'event',
-      id,
-      overrideAccess: false,
-      user,
-    })
-    return event
-  } catch (error) {
-    if (error instanceof Error && error.message.includes('Not Found')) {
-      notFound()
-    }
-    throw error
-  }
-})
 
 export async function generateMetadata({ params }: PageProps) {
   const { id } = await params

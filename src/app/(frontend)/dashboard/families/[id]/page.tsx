@@ -1,6 +1,4 @@
-import { cache } from 'react'
-
-import { notFound, redirect } from 'next/navigation'
+import { redirect } from 'next/navigation'
 
 import SetBreadcrumbs from '@/components/SetBreadcrumbs'
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
@@ -9,35 +7,13 @@ import MembersTab from './MembersTab/MembersTab'
 import FamilyHeader from '../components/FamilyHeader'
 // import WishListsTab from './components/WishListsTab'
 
-import { getPayload, getUser } from '@/lib/server-utils'
+import { getFamily, getUser } from '@/lib/server-utils'
 
 import InvitationsTab from './InvitationsTab/InvitationsTab'
-import { Family } from '@/payload-types'
 import WishListsTab from './WishListsTab'
 import EventsTab from './EventsTab/EventsTab'
 
 type Props = { params: Promise<{ id: string }> }
-
-async function getFamily(id: Family['id']): Promise<Family> {
-  const payload = await getPayload()
-  const user = await getUser()
-  try {
-    const family = await payload.findByID({
-      collection: 'family',
-      id,
-      overrideAccess: false,
-      user,
-      depth: 2,
-    })
-
-    return family
-  } catch (error) {
-    if (error instanceof Error && error.message.includes('Not Found')) {
-      notFound()
-    }
-    throw error
-  }
-}
 
 export default async function FamilyPage({ params }: Props) {
   const user = await getUser()
