@@ -13,16 +13,16 @@ export const Users: CollectionConfig = {
     useAsTitle: 'email',
   },
   auth: true,
-  access: {
-    read: relatedUsers,
-    create: anyone,
-    update: adminsAndUser,
-    delete: adminsAndUser,
-    unlock: admins,
-    admin: ({ req: { user } }) => checkRole(['admin', 'super-admin'], user),
-  },
+  // access: {
+  //   read: relatedUsers,
+  //   create: anyone,
+  //   update: adminsAndUser,
+  //   delete: adminsAndUser,
+  //   unlock: admins,
+  //   admin: ({ req: { user } }) => checkRole(['admin', 'super-admin'], user),
+  // },
   hooks: {
-    afterChange: [loginAfterCreate],
+    // afterChange: [loginAfterCreate],
   },
   fields: [
     // Email added by default
