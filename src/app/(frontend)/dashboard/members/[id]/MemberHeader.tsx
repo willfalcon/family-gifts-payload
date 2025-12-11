@@ -1,0 +1,76 @@
+import { JSONContent } from '@tiptap/react'
+import { Mail, Share2 } from 'lucide-react'
+
+// import { GetMember } from '@/lib/queries/members';
+import { formatDate } from '@/lib/utils'
+
+import Title from '@/components/Title'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { Button } from '@/components/ui/button'
+import Viewer from '@/components/ui/rich-text/viewer'
+import { User } from '@/payload-types'
+
+export default function MemberHeader({ member }: { member: User }) {
+  const avatarUrl = typeof member.avatar === 'string' ? member.avatar : member.avatar?.url
+  return (
+    <div className="mb-8">
+      <div className="flex flex-col md:flex-row gap-6 items-start">
+        <Avatar className="h-24 w-24">
+          <AvatarImage src={avatarUrl || undefined} alt={member.name || undefined} />
+          <AvatarFallback className="text-2xl">
+            {member.name
+              ?.split(' ')
+              .map((n) => n[0])
+              .join('')}
+          </AvatarFallback>
+        </Avatar>
+
+        <div className="flex-1">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-2">
+            <div>
+              <div className="flex items-center gap-2">
+                <Title>{member.name}</Title>
+                {/* <TooltipProvider>
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <div className={`h-3 w-3 rounded-full ${privacyInfo.color}`}></div>
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      <div className="flex items-center gap-1">
+                        {privacyInfo.icon}
+                        <span>{privacyInfo.label}</span>
+                      </div>
+                    </TooltipContent>
+                  </Tooltip>
+                </TooltipProvider> */}
+              </div>
+              <div className="flex items-center gap-2 mt-1">
+                <span className="text-muted-foreground">{member.email}</span>
+              </div>
+              <p className="text-muted-foreground mt-2">Joined {formatDate(member.createdAt)}</p>
+            </div>
+
+            <div className="flex gap-2">
+              <Button size="sm">
+                <Mail className="mr-2 h-4 w-4" />
+                Message
+              </Button>
+              <Button variant="outline">
+                <Share2 className="mr-2 h-4 w-4" />
+                Share
+              </Button>
+            </div>
+          </div>
+
+          {member.bio && (
+            <Viewer
+              className="mt-4"
+              content={member.bio as JSONContent}
+              immediatelyRender={false}
+            />
+          )}
+        </div>
+      </div>
+    </div>
+  )
+}
