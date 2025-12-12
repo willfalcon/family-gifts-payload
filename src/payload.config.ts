@@ -1,5 +1,6 @@
 // storage-adapter-import-placeholder
 import { vercelPostgresAdapter } from '@payloadcms/db-vercel-postgres'
+
 import { payloadCloudPlugin } from '@payloadcms/payload-cloud'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import path from 'path'
@@ -30,16 +31,26 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, Family, Event, Invite, List, Item, Assignment, Exclusion, Favorite, Message],
+  collections: [
+    Users,
+    Media,
+    Family,
+    Event,
+    Invite,
+    List,
+    Item,
+    Assignment,
+    Exclusion,
+    Favorite,
+    Message,
+  ],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },
   db: vercelPostgresAdapter({
-    pool: {
-      connectionString: process.env.POSTGRES_URL || '',
-    },
+    push: true,
     idType: 'uuid',
   }),
   sharp,

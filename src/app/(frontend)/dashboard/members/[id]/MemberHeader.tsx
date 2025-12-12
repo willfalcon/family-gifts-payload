@@ -1,3 +1,5 @@
+'use client'
+
 import { JSONContent } from '@tiptap/react'
 import { Mail, Share2 } from 'lucide-react'
 
@@ -9,9 +11,14 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import Viewer from '@/components/ui/rich-text/viewer'
 import { User } from '@/payload-types'
+import { useAuth } from '@/hooks/use-auth'
+import MessageDialog from '@/components/MessageDialog'
 
 export default function MemberHeader({ member }: { member: User }) {
   const avatarUrl = typeof member.avatar === 'string' ? member.avatar : member.avatar?.url
+  const { user } = useAuth()
+  const isSelf = user?.id === member.id
+
   return (
     <div className="mb-8">
       <div className="flex flex-col md:flex-row gap-6 items-start">
@@ -51,10 +58,7 @@ export default function MemberHeader({ member }: { member: User }) {
             </div>
 
             <div className="flex gap-2">
-              <Button size="sm">
-                <Mail className="mr-2 h-4 w-4" />
-                Message
-              </Button>
+              {user?.id && !isSelf && <MessageDialog user={member} className="align-start" />}
               <Button variant="outline">
                 <Share2 className="mr-2 h-4 w-4" />
                 Share

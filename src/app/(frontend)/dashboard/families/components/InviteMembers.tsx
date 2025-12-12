@@ -55,6 +55,7 @@ export default function InviteMembers({ family }: Props) {
     },
     onSuccess() {
       queryClient.invalidateQueries({ queryKey: ['family-invites', { id: family.id }] })
+      queryClient.invalidateQueries({ queryKey: ['family-members', { id: family.id }] })
       toast.success(`Invites sent!`)
       setOpen(false)
     },
